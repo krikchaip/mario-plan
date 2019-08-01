@@ -5,9 +5,11 @@ import { BrowserRouter } from 'react-router-dom'
 import 'materialize-css/dist/css/materialize.min.css'
 import 'styles.css'
 
+import App from 'views/app'
+
 ReactDOM.render(
   <BrowserRouter>
-    <h1>Mario Plan</h1>
+    <App />
   </BrowserRouter>,
   document.getElementById('root')
 )
