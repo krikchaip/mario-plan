@@ -1,16 +1,16 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import Menu from './Menu'
 import Navbar from './Navbar'
 
-const App: SFC = () => {
+const App: FC = () => {
   return (
     <Navbar>
       <Link to="/" className="brand-logo">
         MarioPlan
       </Link>
-      <Menu.SignedIn />
+      <Menu />
     </Navbar>
   )
 }

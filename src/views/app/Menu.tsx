@@ -1,9 +1,15 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
-const SignedIn: SFC = () => {
+const Menu: FC = () => {
   return (
     <ul className="right">
+      <li>
+        <NavLink to="/">Signup</NavLink>
+      </li>
+      <li>
+        <NavLink to="/">Login</NavLink>
+      </li>
       <li>
         <NavLink to="/">New Project</NavLink>
       </li>
@@ -19,20 +25,4 @@ const SignedIn: SFC = () => {
   )
 }
 
-const SignedOut: SFC = () => {
-  return (
-    <ul className="right">
-      <li>
-        <NavLink to="/">Signup</NavLink>
-      </li>
-      <li>
-        <NavLink to="/">Login</NavLink>
-      </li>
-    </ul>
-  )
-}
-
-export default {
-  SignedIn,
-  SignedOut
-}
+export default Menu

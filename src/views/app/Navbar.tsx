@@ -1,10 +1,8 @@
-import React, { ReactNode, SFC } from 'react'
+import React, { FC } from 'react'
 
-type NavbarProps = {
-  children?: ReactNode
-}
+interface Props {}
 
-const Navbar: SFC<NavbarProps> = ({ children }) => {
+const Navbar: FC = ({ children }) => {
   return (
     <nav className="nav-wrapper grey darken-3">
       <div className="container">{children}</div>
