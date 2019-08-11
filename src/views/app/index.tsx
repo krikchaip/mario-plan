@@ -1,17 +1,24 @@
 import React, { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Switch, Route } from 'react-router-dom'
+
+import Dashboard from 'views/dashboard'
 
 import Menu from './Menu'
 import Navbar from './Navbar'
 
 const App: FC = () => {
   return (
-    <Navbar>
-      <Link to="/" className="brand-logo">
-        MarioPlan
-      </Link>
-      <Menu />
-    </Navbar>
+    <>
+      <Navbar>
+        <Link to="/" className="brand-logo">
+          MarioPlan
+        </Link>
+        <Menu />
+      </Navbar>
+      <Switch>
+        <Route path="/" component={Dashboard} />
+      </Switch>
+    </>
   )
 }
 
