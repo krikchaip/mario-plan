@@ -3,8 +3,8 @@ import { Link, Switch, Route } from 'react-router-dom'
 
 import Dashboard from 'views/dashboard'
 
-import Menu from './Menu'
-import Navbar from './Navbar'
+import Menu from './menu'
+import Navbar from './navbar'
 
 const App: FC = () => {
   return (

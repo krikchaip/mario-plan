@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
-import Notifications from './Notifications'
-import Projects from './Projects'
+import Notifications from './notifications'
+import Projects from './projects'
 
 const Dashboard: FC = () => {
   return (
