@@ -1,7 +1,7 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Menu: FC = () => {
+const Menu = () => {
   return (
     <ul className="right">
       <li>

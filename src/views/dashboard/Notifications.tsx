@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
+import React from 'react'
 
-const Notifications: FC = () => {
+const Notifications = () => {
   return (
     <div>
       <p>Notifications</p>

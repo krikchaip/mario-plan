@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
+import React from 'react'
 
-const Projects: FC = () => {
+const Projects = () => {
   return (
     <div className="project-list section">
       {Array(3)

@@ -1,9 +1,9 @@
-import React, { FC } from 'react'
+import React from 'react'
 
 import Notifications from './notifications'
 import Projects from './projects'
 
-const Dashboard: FC = () => {
+const Dashboard = () => {
   return (
     <div className="dashboard container">
       <div className="row">

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Link, Switch, Route } from 'react-router-dom'
 
 import Dashboard from 'views/dashboard'
@@ -6,7 +6,7 @@ import Dashboard from 'views/dashboard'
 import Menu from './menu'
 import Navbar from './navbar'
 
-const App: FC = () => {
+const App = () => {
   return (
     <>
       <Navbar>

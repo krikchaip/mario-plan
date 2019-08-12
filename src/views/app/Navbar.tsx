@@ -1,6 +1,11 @@
-import React, { FC } from 'react'
+import React, { ReactNode } from 'react'
 
-const Navbar: FC = ({ children }) => {
+type Props = {
+  children?: ReactNode
+}
+
+const Navbar = (props: Props) => {
+  const { children } = props
   return (
     <nav className="nav-wrapper grey darken-3">
       <div className="container">{children}</div>
