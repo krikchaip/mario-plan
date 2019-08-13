@@ -11,7 +11,7 @@ const Menu = () => {
         <NavLink to="/signin">Login</NavLink>
       </li>
       <li>
-        <NavLink to="/">New Project</NavLink>
+        <NavLink to="/project/create">New Project</NavLink>
       </li>
       <li>
         <NavLink to="/">Log Out</NavLink>
