@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Projects = () => {
+export const Projects = () => {
   return (
     <div className="project-list section">
       {Array(3)

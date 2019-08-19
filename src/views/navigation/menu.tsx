@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Menu = () => {
+export const Menu = () => {
   return (
     <ul className="right">
       <li>

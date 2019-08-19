@@ -4,7 +4,7 @@ import { Switch, Route, RouteComponentProps } from 'react-router-dom'
 import Details from './details'
 import Create from './create'
 
-const Project = (props: RouteComponentProps) => {
+export const Project = (props: RouteComponentProps) => {
   const { match } = props
   return (
     <Switch>

@@ -3,7 +3,7 @@ import React from 'react'
 import Notifications from './notifications'
 import Projects from './projects'
 
-const Dashboard = () => {
+export const Dashboard = () => {
   return (
     <div className="dashboard container">
       <div className="row">

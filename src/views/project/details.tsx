@@ -5,7 +5,7 @@ type Params = {
   id: string
 }
 
-const Details = (props: RouteComponentProps<Params>) => {
+export const Details = (props: RouteComponentProps<Params>) => {
   const { match } = props
   const { id } = match.params
   return (

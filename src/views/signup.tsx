@@ -23,7 +23,7 @@ const formReducer: React.Reducer<FormState, FormAction> = (state, action) => {
   }
 }
 
-const Signup = () => {
+export const Signup = () => {
   const [state, dispatch] = useReducer(formReducer, FormState)
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
