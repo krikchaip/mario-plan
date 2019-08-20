@@ -1,1 +1,9 @@
-export default undefined
+import { combineReducers } from 'redux'
+
+import auth from './auth'
+import project from './project'
+
+export default combineReducers({
+  auth: auth.reducer,
+  project: project.reducer
+})
