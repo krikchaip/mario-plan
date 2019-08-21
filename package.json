@@ -9,6 +9,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "cuid": "^2.1.6",
     "flux-standard-action": "^2.1.1",
     "materialize-css": "^1.0.0",
     "ramda": "^0.26.1",

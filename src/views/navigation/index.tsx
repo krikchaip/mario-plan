@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import Navbar from './navbar'
 import Menu from './menu'
+import Navbar from './navbar'
 
 export const Navigation = () => {
   return (

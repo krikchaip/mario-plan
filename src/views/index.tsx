@@ -1,8 +1,8 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import Navigation from 'views/navigation'
 import Dashboard from 'views/dashboard'
+import Navigation from 'views/navigation'
 import Project from 'views/project'
 import Signin from 'views/signin'
 import Signup from 'views/signup'

@@ -7,8 +7,8 @@ import 'materialize-css/dist/js/materialize.min.js'
 import 'materialize-css/dist/css/materialize.min.css'
 import 'styles.css'
 
-import App from 'views'
 import store from 'modules'
+import App from 'views'
 
 ReactDOM.render(
   <Provider store={store}>

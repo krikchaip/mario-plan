@@ -1,8 +1,8 @@
 import React from 'react'
 import { Switch, Route, RouteComponentProps } from 'react-router-dom'
 
-import Details from './details'
 import Create from './create'
+import Details from './details'
 
 export const Project = (props: RouteComponentProps) => {
   const { match } = props
