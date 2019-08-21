@@ -1,6 +1,7 @@
 import { AnyAction } from 'redux'
 
-type State = typeof initialState
+export type State = typeof initialState
+
 const initialState = {}
 
 export default (state: State = initialState, action: AnyAction) => {
