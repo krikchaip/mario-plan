@@ -1,15 +1,17 @@
-import { AnyAction } from 'redux'
+import { Action } from './actions'
+import { Project } from './model'
 
 export type State = typeof initialState
 
 const initialState = {
-  projects: [
-    { id: '1', title: 'help me find peach', content: 'blah blah blah' },
-    { id: '2', title: 'collect all the stars', content: 'blah blah blah' },
-    { id: '3', title: 'egg hunt with yoshi', content: 'blah blah blah' }
-  ]
+  projects: [] as Project[]
 }
 
-export default (state: State = initialState, action: AnyAction) => {
-  return state
+export default (state: State = initialState, action: Action) => {
+  switch (action.type) {
+    case '@project/create':
+      return { ...state, projects: state.projects.concat(action.payload) }
+    default:
+      return state
+  }
 }

@@ -1,4 +1,7 @@
 import React, { useReducer } from 'react'
+import { connect } from 'react-redux'
+
+import project from 'modules/project'
 
 const FormState = { title: '', content: '' }
 
@@ -19,12 +22,19 @@ const formReducer: React.Reducer<FormState, FormAction> = (state, action) => {
   }
 }
 
-export const Create = () => {
+type Props = typeof mapDispatchToProps
+
+const mapDispatchToProps = {
+  onSubmit: project.actions.create
+}
+
+export const Create = (props: Props) => {
+  const { onSubmit } = props
   const [state, dispatch] = useReducer(formReducer, FormState)
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log(state)
+    onSubmit(state)
   }
 
   /** element target id update pattern */
@@ -61,4 +71,7 @@ export const Create = () => {
   )
 }
 
-export default Create
+export default connect(
+  null,
+  mapDispatchToProps
+)(Create)
