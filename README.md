@@ -9,4 +9,4 @@ Project from [React, Redux & Firebase App Tutorial](https://www.youtube.com/play
 - Typescript
 - Redux Saga
 - Firebase Auth, Firestore, Firebase Cloud Function, Firebase Hosting
-- TDD with React Testing Library
+- TDD with Jest and React Testing Library
