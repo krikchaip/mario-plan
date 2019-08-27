@@ -1,26 +1,9 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
+import useFormState, { serialize } from 'lib/hooks/useFormState'
+
 import project from 'modules/project'
-
-const FormState = { title: '', content: '' }
-
-type FormState = typeof FormState
-type FormAction = {
-  type: '@set/title' | '@set/content'
-  payload: string
-}
-
-const formReducer: React.Reducer<FormState, FormAction> = (state, action) => {
-  switch (action.type) {
-    case '@set/title':
-      return { ...state, title: action.payload }
-    case '@set/content':
-      return { ...state, content: action.payload }
-    default:
-      return state
-  }
-}
 
 type Props = typeof mapDispatchToProps
 
@@ -30,21 +13,18 @@ const mapDispatchToProps = {
 
 export const Create = (props: Props) => {
   const { onSubmit } = props
-  const [state, dispatch] = useReducer(formReducer, FormState)
+  const formState = useFormState({ title: '', content: '' })
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    onSubmit(state)
+    onSubmit(serialize(formState))
   }
 
   /** element target id update pattern */
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    dispatch({
-      type: `@set/${e.target.id}` as FormAction['type'],
-      payload: e.target.value
-    })
+    formState[e.target.id as keyof (typeof formState)].set(e.target.value)
   }
 
   return (

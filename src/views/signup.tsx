@@ -1,34 +1,25 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 
-const FormState = { email: '', password: '', firstname: '', lastname: '' }
-
-type FormState = typeof FormState
-type FormAction = {
-  type: '@set/email' | '@set/password' | '@set/firstname' | '@set/lastname'
-  payload: string
-}
-
-const formReducer: React.Reducer<FormState, FormAction> = (state, action) => {
-  switch (action.type) {
-    case '@set/email':
-      return { ...state, email: action.payload }
-    case '@set/password':
-      return { ...state, password: action.payload }
-    case '@set/firstname':
-      return { ...state, firstname: action.payload }
-    case '@set/lastname':
-      return { ...state, lastname: action.payload }
-    default:
-      return state
-  }
-}
+import useFormState, { serialize } from 'lib/hooks/useFormState'
 
 export const Signup = () => {
-  const [state, dispatch] = useReducer(formReducer, FormState)
+  const formState = useFormState({
+    email: '',
+    password: '',
+    firstname: '',
+    lastname: ''
+  })
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log(state)
+    console.log(serialize(formState))
+  }
+
+  /** element target id update pattern */
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    formState[e.target.id as keyof (typeof formState)].set(e.target.value)
   }
 
   return (
@@ -37,43 +28,19 @@ export const Signup = () => {
         <h5 className="grey-text text-darken-3">Sign Up</h5>
         <div className="input-field">
           <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            onChange={e =>
-              dispatch({ type: '@set/email', payload: e.target.value })
-            }
-          />
+          <input type="email" id="email" onChange={handleChange} />
         </div>
         <div className="input-field">
           <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            onChange={e =>
-              dispatch({ type: '@set/password', payload: e.target.value })
-            }
-          />
+          <input type="password" id="password" onChange={handleChange} />
         </div>
         <div className="input-field">
           <label htmlFor="firstname">Firstname</label>
-          <input
-            type="text"
-            id="firstname"
-            onChange={e =>
-              dispatch({ type: '@set/firstname', payload: e.target.value })
-            }
-          />
+          <input type="text" id="firstname" onChange={handleChange} />
         </div>
         <div className="input-field">
           <label htmlFor="lastname">Lastname</label>
-          <input
-            type="text"
-            id="lastname"
-            onChange={e =>
-              dispatch({ type: '@set/lastname', payload: e.target.value })
-            }
-          />
+          <input type="text" id="lastname" onChange={handleChange} />
         </div>
         <div className="input-field">
           <button className="btn pink lighten-1 z-depth-0">SIGN UP</button>
