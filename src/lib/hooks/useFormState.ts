@@ -1,7 +1,5 @@
 import { useReducer, Reducer } from 'react'
 
-type POJO<T> = T extends object ? (keyof T extends string ? T : never) : never
-
 type FormState<T> = {
   [K in keyof T]: {
     get: () => T[K]
