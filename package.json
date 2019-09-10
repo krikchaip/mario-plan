@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "cuid": "^2.1.6",
+    "firebase": "^6.5.0",
     "materialize-css": "^1.0.0",
     "ramda": "^0.26.1",
     "react": "^16.8.6",
