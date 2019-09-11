@@ -1,17 +1,29 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
 
-import { CreateAction, saveError } from './actions'
-import { addProject } from './model'
+import { CreateAction, save, init } from './actions'
+import { fetchProjects, addProject, Project } from './model'
 
-function* save(action: CreateAction) {
-  const user = { firstname: 'test-firstname', lastname: 'test-lastname' }
+const user = { firstname: 'test-firstname', lastname: 'test-lastname' }
+
+function* initSaga() {
   try {
-    yield call(addProject, action.payload, user)
+    const projects: Project[] = yield call(fetchProjects, user)
+    yield put(init(projects))
   } catch {
-    yield put(saveError(new Error('save')))
+    console.error('@project/init:error')
+  }
+}
+
+function* saveSaga(action: CreateAction) {
+  try {
+    const project: Project = yield call(addProject, action.payload, user)
+    yield put(save.success(project))
+  } catch {
+    yield put(save.error(new Error('@project/save:error')))
   }
 }
 
 export default function*() {
-  yield takeLatest<CreateAction>('@project/create', save)
+  yield call(initSaga)
+  yield takeLatest<CreateAction>('@project/create', saveSaga)
 }

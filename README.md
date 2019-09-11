@@ -4,6 +4,11 @@ Project from [React, Redux & Firebase App Tutorial](https://www.youtube.com/play
 
 ![preview.gif](#)
 
+## Setup
+
+- put your firebase config in `src/config/firebase-client.json`
+- _(Development)_ run `yarn start` or `npm start`
+
 ## What I'll learn from this project
 
 - Typescript

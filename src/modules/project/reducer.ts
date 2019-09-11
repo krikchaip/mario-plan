@@ -9,7 +9,9 @@ const initialState = {
 
 export default (state: State = initialState, action: Action) => {
   switch (action.type) {
-    case '@project/create':
+    case '@project/init':
+      return { ...state, projects: action.payload }
+    case '@project/save:success':
       return { ...state, projects: state.projects.concat(action.payload) }
     case '@project/save:error':
       return state
