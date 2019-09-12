@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import project from 'modules/project'
 
@@ -14,13 +15,15 @@ export const Projects = (props: Props) => {
   return (
     <div className="project-list section">
       {projects.map(p => (
-        <div key={p.id} className="card z-depth-0 project-summary">
-          <div className="card-content grey-text text-darken-3">
-            <span className="card-title ">{p.title}</span>
-            <p>{p.content}</p>
-            <p className="grey-text">3rd September, 2am</p>
+        <Link to={`/project/${p.id}`} key={p.id}>
+          <div className="card z-depth-0 project-summary">
+            <div className="card-content grey-text text-darken-3">
+              <span className="card-title ">{p.title}</span>
+              <p>{p.content}</p>
+              <p className="grey-text">3rd September, 2am</p>
+            </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   )
