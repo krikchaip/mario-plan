@@ -1,31 +1,43 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 
-type Params = {
-  id: string
-}
+import project from 'modules/project'
 
-export const Details = (props: RouteComponentProps<Params>) => {
-  const { match } = props
-  const { id } = match.params
+type Props = ReturnType<typeof mapStateToProps> & OwnProps
+type OwnProps = RouteComponentProps<{ id: string }>
+
+const mapStateToProps = (state: AppState, props: OwnProps) => ({
+  project: project.selectors.getProject(state, props.match.params.id)
+})
+
+export const Details = (props: Props) => {
+  const { project } = props
+
+  if (!project) {
+    return (
+      <div className="container center">
+        <p>Loading Project...</p>
+      </div>
+    )
+  }
+
   return (
     <div className="container section project-details">
       <div className="card z-depth-0">
         <div className="card-content">
-          <span className="card-title">Project title - {id}</span>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et labore
-            quaerat quibusdam vel saepe, ab voluptate accusantium culpa nemo
-            fuga earum? Soluta amet nobis officia sed neque fuga aperiam quia?
-          </p>
+          <span className="card-title">{project.title}</span>
+          <p>{project.content}</p>
         </div>
         <div className="card-action grey lighten-4 grey-text">
-          <div>Posted by The Net Ninja</div>
-          <div>2nd September, 2am</div>
+          <div>
+            Posted by {project.authorFirstName} {project.authorLastName}
+          </div>
+          <div>{project.createdAt.toString()}</div>
         </div>
       </div>
     </div>
   )
 }
 
-export default Details
+export default connect(mapStateToProps)(Details)

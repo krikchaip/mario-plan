@@ -20,7 +20,7 @@ export const Projects = (props: Props) => {
             <div className="card-content grey-text text-darken-3">
               <span className="card-title ">{p.title}</span>
               <p>{p.content}</p>
-              <p className="grey-text">3rd September, 2am</p>
+              <p className="grey-text">{p.createdAt.toString()}</p>
             </div>
           </div>
         </Link>

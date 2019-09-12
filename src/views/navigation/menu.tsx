@@ -8,7 +8,7 @@ export const Menu = () => {
         <NavLink to="/signup">Signup</NavLink>
       </li>
       <li>
-        <NavLink to="/signin">Login</NavLink>
+        <NavLink to="/signin">Signin</NavLink>
       </li>
       <li>
         <NavLink to="/project/create">New Project</NavLink>
