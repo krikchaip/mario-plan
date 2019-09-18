@@ -5,14 +5,18 @@ import useFormState, { serialize } from 'lib/hooks/useFormState'
 
 import auth from 'modules/auth'
 
-type Props = typeof mapDispatchToProps
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+
+const mapStateToProps = (state: AppState) => ({
+  error: auth.selectors.getError(state)
+})
 
 const mapDispatchToProps = {
   signin: auth.actions.signin.attempt
 }
 
 export const Signin = (props: Props) => {
-  const { signin } = props
+  const { signin, error } = props
   const formState = useFormState({ email: '', password: '' })
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -41,6 +45,11 @@ export const Signin = (props: Props) => {
         </div>
         <div className="input-field">
           <button className="btn pink lighten-1 z-depth-0">Login</button>
+          {error && (
+            <div className="red-text center">
+              <p>{error.message}</p>
+            </div>
+          )}
         </div>
       </form>
     </div>
@@ -48,6 +57,6 @@ export const Signin = (props: Props) => {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Signin)
