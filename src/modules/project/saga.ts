@@ -25,5 +25,5 @@ function* saveSaga(action: CreateAction) {
 
 export default function*() {
   yield call(initSaga)
-  yield takeLatest<CreateAction>('@project/create', saveSaga)
+  yield takeLatest('@project/create', saveSaga)
 }

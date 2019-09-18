@@ -1,13 +1,23 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import useFormState, { serialize } from 'lib/hooks/useFormState'
 
-export const Signin = () => {
+import auth from 'modules/auth'
+
+type Props = typeof mapDispatchToProps
+
+const mapDispatchToProps = {
+  signin: auth.actions.signin.attempt
+}
+
+export const Signin = (props: Props) => {
+  const { signin } = props
   const formState = useFormState({ email: '', password: '' })
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log(serialize(formState))
+    signin(serialize(formState))
   }
 
   /** element target id update pattern */
@@ -37,4 +47,7 @@ export const Signin = () => {
   )
 }
 
-export default Signin
+export default connect(
+  null,
+  mapDispatchToProps
+)(Signin)
