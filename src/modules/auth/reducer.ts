@@ -13,6 +13,8 @@ export default (state: State = initialState, action: Action) => {
       return { ...state, user: action.payload, error: null }
     case '@auth/signin:error':
       return { ...state, user: null, error: action.payload }
+    case '@auth/signout:success':
+      return initialState
     default:
       return state
   }
