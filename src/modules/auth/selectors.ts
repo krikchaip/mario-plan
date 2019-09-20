@@ -8,3 +8,8 @@ export const getError = pipe(
   getState,
   (state: State) => state.error
 )
+
+export const getUser = pipe(
+  getState,
+  (state: State) => state.user
+)
