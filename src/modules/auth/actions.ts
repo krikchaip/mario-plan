@@ -1,6 +1,12 @@
 import { Credentials } from './model'
 
-export type Action = SigninAction | SignoutAction
+export type Action = InitAction | SigninAction | SignoutAction
+
+export type InitAction = ReturnType<typeof init>
+export const init = (user: firebase.User | null) => ({
+  type: '@auth/init' as const,
+  payload: user
+})
 
 export type SigninAction =
   | ReturnType<typeof signin.attempt>

@@ -1,7 +1,13 @@
-import { call, put, fork, take } from 'redux-saga/effects'
+import { call, put, fork, take, select } from 'redux-saga/effects'
 
-import { signin, signout } from './actions'
-import { emailSignin, userSignout } from './model'
+import { signin, signout, init } from './actions'
+import { emailSignin, userSignout, getCurrentUser } from './model'
+import { getUser } from './selectors'
+
+function* initSaga() {
+  const user: firebase.User | null = yield call(getCurrentUser)
+  yield put(init(user))
+}
 
 function* signinSaga(action: ReturnType<typeof signin.attempt>) {
   try {
@@ -30,9 +36,14 @@ function* signoutSaga() {
 
 function* loginSaga() {
   while (true) {
-    const { error } = yield call(signinSaga, yield take('@auth/signin:attempt'))
+    const user = yield select(getUser)
+    if (!user) {
+      const attempt = yield take('@auth/signin:attempt')
+      const { error } = yield call(signinSaga, attempt)
 
-    if (error) continue
+      // re-login when an error occured
+      if (error) continue
+    }
 
     yield take('@auth/signout:attempt')
     yield call(signoutSaga)
@@ -40,5 +51,6 @@ function* loginSaga() {
 }
 
 export default function*() {
+  yield call(initSaga)
   yield fork(loginSaga)
 }

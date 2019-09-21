@@ -9,6 +9,8 @@ const initialState = {
 
 export default (state: State = initialState, action: Action) => {
   switch (action.type) {
+    case '@auth/init':
+      return { ...state, user: action.payload }
     case '@auth/signin:success':
       return { ...state, user: action.payload, error: null }
     case '@auth/signin:error':
