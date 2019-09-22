@@ -1,55 +1,46 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
 
-import auth from 'modules/auth'
+import auth, { AuthLink } from 'modules/auth'
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
-
-const mapStateToProps = (state: AppState) => ({
-  user: auth.selectors.getUser(state)
-})
+type Props = typeof mapDispatchToProps
 
 const mapDispatchToProps = {
   signout: auth.actions.signout.attempt
 }
 
 export const Menu = (props: Props) => {
-  const { signout, user } = props
-
-  if (user) {
-    return (
-      <ul className="right">
-        <li>
-          <NavLink to="/project/create">New Project</NavLink>
-        </li>
-        <li>
-          <NavLink to="/" onClick={signout}>
-            Log Out
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/" className="btn btn-floating pink lighten-1">
-            NN
-          </NavLink>
-        </li>
-      </ul>
-    )
-  }
-
+  const { signout } = props
   return (
     <ul className="right">
       <li>
-        <NavLink to="/signup">Signup</NavLink>
+        <AuthLink noAuth to="/signup">
+          Signup
+        </AuthLink>
       </li>
       <li>
-        <NavLink to="/signin">Signin</NavLink>
+        <AuthLink noAuth to="/signin">
+          Signin
+        </AuthLink>
+      </li>
+      <li>
+        <AuthLink to="/project/create">New Project</AuthLink>
+      </li>
+      <li>
+        <AuthLink to="/" onClick={signout}>
+          Log Out
+        </AuthLink>
+      </li>
+      <li>
+        <AuthLink to="/" className="btn btn-floating pink lighten-1">
+          NN
+        </AuthLink>
       </li>
     </ul>
   )
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Menu)
