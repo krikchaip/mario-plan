@@ -15,6 +15,7 @@ const mapDispatchToProps = {
   signin: auth.actions.signin.attempt
 }
 
+// TODO: module testing
 export const Signin = (props: Props) => {
   const { signin, error } = props
   const formState = useFormState({ email: '', password: '' })

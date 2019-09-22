@@ -1,5 +1,7 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
+
+import { AuthRoute } from 'modules/auth'
 
 import Dashboard from 'views/dashboard'
 import Navigation from 'views/navigation'
@@ -12,10 +14,10 @@ export const App = () => {
     <>
       <Navigation />
       <Switch>
-        <Route path="/signin" component={Signin} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/project" component={Project} />
-        <Route path="/" component={Dashboard} />
+        <AuthRoute noAuth path="/signin" component={Signin} />
+        <AuthRoute noAuth path="/signup" component={Signup} />
+        <AuthRoute path="/project" redirect="/signin" component={Project} />
+        <AuthRoute path="/" redirect="/signin" component={Dashboard} />
       </Switch>
     </>
   )

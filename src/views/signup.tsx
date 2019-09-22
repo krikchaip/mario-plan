@@ -2,6 +2,7 @@ import React from 'react'
 
 import useFormState, { serialize } from 'lib/hooks/useFormState'
 
+// TODO: module testing
 export const Signup = () => {
   const formState = useFormState({
     email: '',

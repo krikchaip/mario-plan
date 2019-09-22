@@ -4,6 +4,7 @@ import * as selectors from './selectors'
 import reducer from './reducer'
 import saga from './saga'
 
+// TODO: module testing
 export default {
   actions,
   model,

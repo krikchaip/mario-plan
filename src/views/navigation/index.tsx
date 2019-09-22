@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Menu from './menu'
 import Navbar from './navbar'
 
+// TODO: module testing
 export const Navigation = () => {
   return (
     <Navbar>

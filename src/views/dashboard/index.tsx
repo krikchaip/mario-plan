@@ -3,6 +3,7 @@ import React from 'react'
 import Notifications from './notifications'
 import Projects from './projects'
 
+// TODO: module testing
 export const Dashboard = () => {
   return (
     <div className="dashboard container">

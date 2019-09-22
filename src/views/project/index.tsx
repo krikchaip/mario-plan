@@ -6,6 +6,7 @@ import Details from './details'
 
 type Props = RouteComponentProps
 
+// TODO: module testing
 export const Project = (props: Props) => {
   const { match } = props
   return (
