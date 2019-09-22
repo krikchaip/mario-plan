@@ -4,6 +4,7 @@ import * as selectors from './selectors'
 import reducer from './reducer'
 import saga from './saga'
 
+export { default as AuthLink } from './components/AuthLink'
 export { default as AuthRoute } from './components/AuthRoute'
 
 // TODO: module testing
