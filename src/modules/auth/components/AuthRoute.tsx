@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Redirect, RouteProps } from 'react-router-dom'
 
-import { getUser } from '../selectors'
+import { getIsLoggedIn } from '../selectors'
 
 type Props = ReturnType<typeof mapStateToProps> & RouteProps & OwnProps
 type OwnProps = {
@@ -11,18 +11,18 @@ type OwnProps = {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  user: getUser(state)
+  isLoggedIn: getIsLoggedIn(state)
 })
 
 // TODO: module testing
 export const AuthRoute = (props: Props) => {
-  const { user, redirect = '/', noAuth, ...routeProps } = props
+  const { isLoggedIn, redirect = '/', noAuth, ...routeProps } = props
 
   if (noAuth) {
-    return user ? <Redirect to={redirect} /> : <Route {...routeProps} />
+    return isLoggedIn ? <Redirect to={redirect} /> : <Route {...routeProps} />
   }
 
-  return user ? <Route {...routeProps} /> : <Redirect to={redirect} />
+  return isLoggedIn ? <Route {...routeProps} /> : <Redirect to={redirect} />
 }
 
 export default connect(mapStateToProps)(AuthRoute)

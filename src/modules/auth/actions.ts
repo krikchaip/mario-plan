@@ -2,11 +2,19 @@ import { Credentials } from './model'
 
 export type Action = InitAction | SigninAction | SignoutAction
 
-export type InitAction = ReturnType<typeof init>
-export const init = (user: firebase.User | null) => ({
-  type: '@auth/init' as const,
-  payload: user
-})
+export type InitAction =
+  | ReturnType<typeof init.isLoggedIn>
+  | ReturnType<typeof init.user>
+export const init = {
+  isLoggedIn: (value: boolean) => ({
+    type: '@auth/init:isLoggedIn' as const,
+    payload: value
+  }),
+  user: (user: firebase.User | null) => ({
+    type: '@auth/init:user' as const,
+    payload: user
+  })
+}
 
 export type SigninAction =
   | ReturnType<typeof signin.attempt>
@@ -17,9 +25,9 @@ export const signin = {
     type: '@auth/signin:attempt' as const,
     payload: creds
   }),
-  success: (user: firebase.User) => ({
+  success: (user: firebase.User | null, isLoggedIn: boolean) => ({
     type: '@auth/signin:success' as const,
-    payload: user
+    payload: { user, isLoggedIn }
   }),
   error: (err: Error) => ({
     type: '@auth/signin:error' as const,

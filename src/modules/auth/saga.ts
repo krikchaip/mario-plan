@@ -1,12 +1,19 @@
 import { call, put, fork, take, select } from 'redux-saga/effects'
 
 import { signin, signout, init } from './actions'
-import { emailSignin, userSignout, getCurrentUser } from './model'
+import { emailSignin, userSignout, getCurrentUser, cache } from './model'
 import { getUser } from './selectors'
 
 function* initSaga() {
+  // pre-loaded cache
+  let isLoggedIn: boolean = yield call(() => cache.isLoggedIn)
+  yield put(init.isLoggedIn(isLoggedIn))
+
   const user: firebase.User | null = yield call(getCurrentUser)
-  yield put(init(user))
+  isLoggedIn = yield call(() => (cache.isLoggedIn = !!user))
+
+  yield put(init.user(user))
+  yield put(init.isLoggedIn(isLoggedIn))
 }
 
 function* signinSaga(action: ReturnType<typeof signin.attempt>) {
@@ -15,7 +22,11 @@ function* signinSaga(action: ReturnType<typeof signin.attempt>) {
       emailSignin,
       action.payload
     )
-    return yield put(signin.success(user!))
+
+    // logged-in state caching
+    const isLoggedIn = yield call(() => (cache.isLoggedIn = !!user))
+
+    return yield put(signin.success(user, isLoggedIn))
   } catch {
     return yield put(signin.error(new Error('@auth/signin:error')))
   }
@@ -29,6 +40,10 @@ function* signoutSaga() {
     } catch {
       continue
     }
+
+    // logged-out state caching
+    yield call(() => (cache.isLoggedIn = false))
+
     yield put(signout.success())
     break
   }

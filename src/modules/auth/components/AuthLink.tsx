@@ -4,7 +4,7 @@ import { NavLink, NavLinkProps } from 'react-router-dom'
 
 import omit from 'ramda/src/omit'
 
-import { getUser } from '../selectors'
+import { getIsLoggedIn } from '../selectors'
 
 type Props = ReturnType<typeof mapStateToProps> & NavLinkProps & OwnProps
 type OwnProps = {
@@ -12,19 +12,19 @@ type OwnProps = {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  user: getUser(state)
+  isLoggedIn: getIsLoggedIn(state)
 })
 
 // TODO: module testing
 export const AuthLink = (props: Props) => {
-  const { user, noAuth, ...navLinkProps } = props
+  const { isLoggedIn, noAuth, ...navLinkProps } = props
   const otherProps = omit(['dispatch'], navLinkProps)
 
   if (noAuth) {
-    return user ? null : <NavLink {...otherProps} />
+    return isLoggedIn ? null : <NavLink {...otherProps} />
   }
 
-  return user ? <NavLink {...otherProps} /> : null
+  return isLoggedIn ? <NavLink {...otherProps} /> : null
 }
 
 export default connect(mapStateToProps)(AuthLink)
