@@ -1,9 +1,23 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import useFormState, { serialize } from 'lib/hooks/useFormState'
 
+import auth, { useErrorFlush } from 'modules/auth'
+
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+
+const mapStateToProps = (state: AppState) => ({
+  error: auth.selectors.getError(state)
+})
+
+const mapDispatchToProps = {
+  signup: auth.actions.signup.attempt
+}
+
 // TODO: module testing
-export const Signup = () => {
+export const Signup = (props: Props) => {
+  const { signup, error } = props
   const formState = useFormState({
     email: '',
     password: '',
@@ -11,9 +25,11 @@ export const Signup = () => {
     lastname: ''
   })
 
+  useErrorFlush()
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log(serialize(formState))
+    signup(serialize(formState))
   }
 
   /** element target id update pattern */
@@ -46,9 +62,17 @@ export const Signup = () => {
         <div className="input-field">
           <button className="btn pink lighten-1 z-depth-0">SIGN UP</button>
         </div>
+        {error && (
+          <div className="red-text center">
+            <p>{error.message}</p>
+          </div>
+        )}
       </form>
     </div>
   )
 }
 
-export default Signup
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Signup)

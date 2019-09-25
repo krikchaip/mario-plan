@@ -1,6 +1,11 @@
-import { Credentials } from './model'
+import { Credentials, SignupForm } from './model'
 
-export type Action = InitAction | SigninAction | SignoutAction
+export type Action =
+  | InitAction
+  | SignupAction
+  | SigninAction
+  | SignoutAction
+  | FlushAction
 
 export type InitAction =
   | ReturnType<typeof init.isLoggedIn>
@@ -13,6 +18,26 @@ export const init = {
   user: (user: firebase.User | null) => ({
     type: '@auth/init:user' as const,
     payload: user
+  })
+}
+
+export type SignupAction =
+  | ReturnType<typeof signup.attempt>
+  | ReturnType<typeof signup.success>
+  | ReturnType<typeof signup.error>
+export const signup = {
+  attempt: (form: SignupForm) => ({
+    type: '@auth/signup:attempt' as const,
+    payload: form
+  }),
+  success: (user: firebase.User | null, isLoggedIn: boolean) => ({
+    type: '@auth/signup:success' as const,
+    payload: { user, isLoggedIn }
+  }),
+  error: (err: Error) => ({
+    type: '@auth/signup:error' as const,
+    payload: err,
+    error: true as const
   })
 }
 
@@ -45,5 +70,12 @@ export const signout = {
   }),
   success: () => ({
     type: '@auth/signout:success' as const
+  })
+}
+
+export type FlushAction = ReturnType<typeof flush.error>
+export const flush = {
+  error: () => ({
+    type: '@auth/flush:error' as const
   })
 }

@@ -5,6 +5,11 @@ export interface Credentials {
   password: string
 }
 
+export interface SignupForm extends Credentials {
+  firstname: string
+  lastname: string
+}
+
 export const cache = {
   get isLoggedIn() {
     const isLoggedIn = localStorage.getItem('isLoggedIn')
@@ -28,7 +33,24 @@ export async function getCurrentUser() {
   )
 }
 
-export async function emailSignin(creds: Credentials) {
+export async function userSignup(form: SignupForm) {
+  const { email, password, ...userData } = form
+
+  // automatically signed-in user when success
+  const { user } = await firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+
+  await firebase
+    .firestore()
+    .collection('users')
+    .doc(user!.uid)
+    .set(userData)
+
+  return user
+}
+
+export async function userSignin(creds: Credentials) {
   return firebase.auth().signInWithEmailAndPassword(creds.email, creds.password)
 }
 

@@ -7,6 +7,8 @@ import saga from './saga'
 export { default as AuthLink } from './components/AuthLink'
 export { default as AuthRoute } from './components/AuthRoute'
 
+export { default as useErrorFlush } from './hooks/useErrorFlush'
+
 // TODO: module testing
 export default {
   actions,

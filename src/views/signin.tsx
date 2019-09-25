@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import useFormState, { serialize } from 'lib/hooks/useFormState'
 
-import auth from 'modules/auth'
+import auth, { useErrorFlush } from 'modules/auth'
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
@@ -19,6 +19,8 @@ const mapDispatchToProps = {
 export const Signin = (props: Props) => {
   const { signin, error } = props
   const formState = useFormState({ email: '', password: '' })
+
+  useErrorFlush()
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -46,12 +48,12 @@ export const Signin = (props: Props) => {
         </div>
         <div className="input-field">
           <button className="btn pink lighten-1 z-depth-0">Login</button>
-          {error && (
-            <div className="red-text center">
-              <p>{error.message}</p>
-            </div>
-          )}
         </div>
+        {error && (
+          <div className="red-text center">
+            <p>{error.message}</p>
+          </div>
+        )}
       </form>
     </div>
   )

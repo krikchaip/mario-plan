@@ -14,16 +14,20 @@ export default (state: State = initialState, action: Action) => {
       return { ...state, isLoggedIn: action.payload }
     case '@auth/init:user':
       return { ...state, user: action.payload }
+    case '@auth/signup:success':
     case '@auth/signin:success':
       return {
         isLoggedIn: action.payload.isLoggedIn,
         user: action.payload.user,
         error: null
       }
-    case '@auth/signin:error':
-      return { isLoggedIn: false, user: null, error: action.payload }
     case '@auth/signout:success':
       return initialState
+    case '@auth/signup:error':
+    case '@auth/signin:error':
+      return { isLoggedIn: false, user: null, error: action.payload }
+    case '@auth/flush:error':
+      return { ...state, error: null }
     default:
       return state
   }
