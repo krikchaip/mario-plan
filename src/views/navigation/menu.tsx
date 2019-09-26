@@ -3,14 +3,18 @@ import { connect } from 'react-redux'
 
 import auth, { AuthLink } from 'modules/auth'
 
-type Props = typeof mapDispatchToProps
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+
+const mapStateToProps = (state: AppState) => ({
+  initials: auth.selectors.getUserInitials(state)
+})
 
 const mapDispatchToProps = {
   signout: auth.actions.signout.attempt
 }
 
 export const Menu = (props: Props) => {
-  const { signout } = props
+  const { signout, initials } = props
   return (
     <ul className="right">
       <li>
@@ -33,7 +37,7 @@ export const Menu = (props: Props) => {
       </li>
       <li>
         <AuthLink to="/" className="btn btn-floating pink lighten-1">
-          NN
+          {initials.toUpperCase()}
         </AuthLink>
       </li>
     </ul>
@@ -41,6 +45,6 @@ export const Menu = (props: Props) => {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Menu)
