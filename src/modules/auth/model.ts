@@ -5,10 +5,12 @@ export interface Credentials {
   password: string
 }
 
-export interface SignupForm extends Credentials {
+export interface User {
   firstname: string
   lastname: string
 }
+
+export type SignupForm = Credentials & Pick<User, 'firstname' | 'lastname'>
 
 export const cache = {
   get isLoggedIn() {
