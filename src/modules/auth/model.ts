@@ -43,11 +43,18 @@ export async function userSignup(form: SignupForm) {
     .auth()
     .createUserWithEmailAndPassword(email, password)
 
-  await firebase
-    .firestore()
-    .collection('users')
-    .doc(user!.uid)
-    .set(userData)
+  if (!user) return null
+
+  await Promise.all([
+    user.updateProfile({
+      displayName: `${userData.firstname} ${userData.lastname}`
+    }),
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .set(userData)
+  ])
 
   return user
 }
