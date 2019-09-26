@@ -51,7 +51,11 @@ export async function userSignup(form: SignupForm) {
 }
 
 export async function userSignin(creds: Credentials) {
-  return firebase.auth().signInWithEmailAndPassword(creds.email, creds.password)
+  const { user } = await firebase
+    .auth()
+    .signInWithEmailAndPassword(creds.email, creds.password)
+
+  return user
 }
 
 export async function userSignout() {

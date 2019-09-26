@@ -38,10 +38,7 @@ function* signupSaga(action: ReturnType<typeof signup.attempt>) {
 
 function* signinSaga(action: ReturnType<typeof signin.attempt>) {
   try {
-    const { user }: firebase.auth.UserCredential = yield call(
-      userSignin,
-      action.payload
-    )
+    const user: firebase.User | null = yield call(userSignin, action.payload)
 
     // logged-in state caching
     const isLoggedIn = yield call(() => (cache.isLoggedIn = !!user))
