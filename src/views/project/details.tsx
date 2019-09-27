@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
+import moment from 'moment'
 
 import project from 'modules/project'
 
@@ -33,7 +34,7 @@ export const Details = (props: Props) => {
           <div>
             Posted by {project.authorFirstName} {project.authorLastName}
           </div>
-          <div>{project.createdAt.toString()}</div>
+          <div>{moment(project.createdAt).calendar()}</div>
         </div>
       </div>
     </div>

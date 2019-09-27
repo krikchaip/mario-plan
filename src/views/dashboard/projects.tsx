@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 import project from 'modules/project'
 
@@ -21,7 +22,7 @@ export const Projects = (props: Props) => {
               <div className="card-content grey-text text-darken-3">
                 <span className="card-title ">{p.title}</span>
                 <p>{p.content}</p>
-                <p className="grey-text">{p.createdAt.toString()}</p>
+                <p className="grey-text">{moment(p.createdAt).calendar()}</p>
               </div>
             </div>
           </Link>
