@@ -14,17 +14,21 @@ export const Projects = (props: Props) => {
   const { projects } = props
   return (
     <div className="project-list section">
-      {projects.map(p => (
-        <Link to={`/project/${p.id}`} key={p.id}>
-          <div className="card z-depth-0 project-summary">
-            <div className="card-content grey-text text-darken-3">
-              <span className="card-title ">{p.title}</span>
-              <p>{p.content}</p>
-              <p className="grey-text">{p.createdAt.toString()}</p>
+      {projects.length > 0 ? (
+        projects.map(p => (
+          <Link to={`/project/${p.id}`} key={p.id}>
+            <div className="card z-depth-0 project-summary">
+              <div className="card-content grey-text text-darken-3">
+                <span className="card-title ">{p.title}</span>
+                <p>{p.content}</p>
+                <p className="grey-text">{p.createdAt.toString()}</p>
+              </div>
             </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))
+      ) : (
+        <div className="container left">Loading Projects...</div>
+      )}
     </div>
   )
 }

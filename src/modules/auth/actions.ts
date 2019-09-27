@@ -1,4 +1,4 @@
-import { Credentials, SignupForm } from './model'
+import { Credentials, SignupForm, User } from './model'
 
 export type Action =
   | InitAction
@@ -15,7 +15,7 @@ export const init = {
     type: '@auth/init:isLoggedIn' as const,
     payload: value
   }),
-  user: (user: firebase.User | null) => ({
+  user: (user: User | null) => ({
     type: '@auth/init:user' as const,
     payload: user
   })
@@ -30,7 +30,7 @@ export const signup = {
     type: '@auth/signup:attempt' as const,
     payload: form
   }),
-  success: (user: firebase.User | null, isLoggedIn: boolean) => ({
+  success: (user: User | null, isLoggedIn: boolean) => ({
     type: '@auth/signup:success' as const,
     payload: { user, isLoggedIn }
   }),
@@ -50,7 +50,7 @@ export const signin = {
     type: '@auth/signin:attempt' as const,
     payload: creds
   }),
-  success: (user: firebase.User | null, isLoggedIn: boolean) => ({
+  success: (user: User | null, isLoggedIn: boolean) => ({
     type: '@auth/signin:success' as const,
     payload: { user, isLoggedIn }
   }),

@@ -1,11 +1,12 @@
 import { Action } from './actions'
+import { User } from './model'
 
 export type State = typeof initialState
 
 const initialState = {
   isLoggedIn: false,
   error: null as Error | null,
-  user: null as firebase.User | null
+  user: null as User | null
 }
 
 export default (state: State = initialState, action: Action) => {

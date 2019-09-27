@@ -5,12 +5,17 @@ export interface Credentials {
   password: string
 }
 
-export interface User {
+export interface Profile {
   firstname: string
   lastname: string
 }
 
-export type SignupForm = Credentials & Pick<User, 'firstname' | 'lastname'>
+export interface User {
+  profile: Profile
+  auth: firebase.User
+}
+
+export type SignupForm = Credentials & Profile
 
 export const cache = {
   get isLoggedIn() {
@@ -22,15 +27,32 @@ export const cache = {
   }
 }
 
+export async function getUserProfile(user: firebase.User) {
+  const snapshot = await firebase
+    .firestore()
+    .collection('users')
+    .doc(user.uid)
+    .get()
+
+  return (snapshot.data() || null) as Profile | null
+}
+
 export async function getCurrentUser() {
   // `firebase.auth().currentUser` somehow out-of-sync
   // when being called in this function. So instead we use AuthStateObserver.
   return new Promise(
     (
-      res: (user: firebase.User | null) => void,
+      res: (user: User | null) => void,
       rej: (error: firebase.auth.Error) => void
     ) => {
-      firebase.auth().onAuthStateChanged(res, rej)
+      firebase.auth().onAuthStateChanged(async user => {
+        if (!user) return res(null)
+
+        const profile = await getUserProfile(user)
+        if (!profile) return null
+
+        return res({ profile, auth: user })
+      }, rej)
     }
   )
 }
@@ -45,18 +67,13 @@ export async function userSignup(form: SignupForm) {
 
   if (!user) return null
 
-  await Promise.all([
-    user.updateProfile({
-      displayName: `${userData.firstname} ${userData.lastname}`
-    }),
-    firebase
-      .firestore()
-      .collection('users')
-      .doc(user.uid)
-      .set(userData)
-  ])
+  await firebase
+    .firestore()
+    .collection('users')
+    .doc(user.uid)
+    .set(userData)
 
-  return user
+  return { profile: userData, auth: user } as User
 }
 
 export async function userSignin(creds: Credentials) {
@@ -64,7 +81,12 @@ export async function userSignin(creds: Credentials) {
     .auth()
     .signInWithEmailAndPassword(creds.email, creds.password)
 
-  return user
+  if (!user) return null
+
+  const profile = await getUserProfile(user)
+  if (!profile) return null
+
+  return { profile, auth: user } as User
 }
 
 export async function userSignout() {

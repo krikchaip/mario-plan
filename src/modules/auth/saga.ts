@@ -6,7 +6,8 @@ import {
   userSignout,
   getCurrentUser,
   cache,
-  userSignup
+  userSignup,
+  User
 } from './model'
 import { getUser } from './selectors'
 
@@ -15,7 +16,7 @@ function* initSaga() {
   let isLoggedIn: boolean = yield call(() => cache.isLoggedIn)
   yield put(init.isLoggedIn(isLoggedIn))
 
-  const user: firebase.User | null = yield call(getCurrentUser)
+  const user: User | null = yield call(getCurrentUser)
   isLoggedIn = yield call(() => (cache.isLoggedIn = !!user))
 
   yield put(init.user(user))
@@ -24,8 +25,8 @@ function* initSaga() {
 
 function* signupSaga(action: ReturnType<typeof signup.attempt>) {
   try {
-    const user: firebase.User | null = yield call(userSignup, action.payload)
-    const isLoggedIn = yield call(() => (cache.isLoggedIn = !!user))
+    const user: User | null = yield call(userSignup, action.payload)
+    const isLoggedIn: boolean = yield call(() => (cache.isLoggedIn = !!user))
 
     yield put(signup.success(user, isLoggedIn))
   } catch (firebaseError) {
@@ -38,10 +39,10 @@ function* signupSaga(action: ReturnType<typeof signup.attempt>) {
 
 function* signinSaga(action: ReturnType<typeof signin.attempt>) {
   try {
-    const user: firebase.User | null = yield call(userSignin, action.payload)
+    const user: User | null = yield call(userSignin, action.payload)
 
     // logged-in state caching
-    const isLoggedIn = yield call(() => (cache.isLoggedIn = !!user))
+    const isLoggedIn: boolean = yield call(() => (cache.isLoggedIn = !!user))
 
     return yield put(signin.success(user, isLoggedIn))
   } catch {
@@ -68,7 +69,7 @@ function* signoutSaga() {
 
 function* userAuthSaga() {
   while (true) {
-    const user = yield select(getUser)
+    const user: ReturnType<typeof getUser> = yield select(getUser)
     if (!user) {
       const attempt = yield take('@auth/signin:attempt')
       const { error } = yield call(signinSaga, attempt)
