@@ -4,6 +4,11 @@ import * as selectors from './selectors'
 import reducer from './reducer'
 import saga from './saga'
 
+declare module 'modules/project' {
+  export type Project = model.Project
+  export type Author = model.Author
+}
+
 // TODO: module testing
 export default {
   actions,
