@@ -1,23 +1,25 @@
 import React from 'react'
+import { RouteComponentProps } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import useFormState, { serialize } from 'lib/hooks/useFormState'
 
 import project from 'modules/project'
 
-type Props = typeof mapDispatchToProps
+type Props = RouteComponentProps & typeof mapDispatchToProps
 
 const mapDispatchToProps = {
   onSubmit: project.actions.create
 }
 
 export const Create = (props: Props) => {
-  const { onSubmit } = props
+  const { onSubmit, history } = props
   const formState = useFormState({ title: '', content: '' })
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     onSubmit(serialize(formState))
+    history.push('/')
   }
 
   /** element target id update pattern */

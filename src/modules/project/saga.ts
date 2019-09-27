@@ -1,13 +1,13 @@
-import { takeLatest, call, put } from 'redux-saga/effects'
+import { takeLatest, call, put, select } from 'redux-saga/effects'
+
+import auth, { User } from 'modules/auth'
 
 import { CreateAction, save, init } from './actions'
 import { fetchProjects, addProject, Project } from './model'
 
-const user = { firstname: 'test-firstname', lastname: 'test-lastname' }
-
 function* initSaga() {
   try {
-    const projects: Project[] = yield call(fetchProjects, user)
+    const projects: Project[] = yield call(fetchProjects)
     yield put(init(projects))
   } catch {
     console.error('@project/init:error')
@@ -16,7 +16,12 @@ function* initSaga() {
 
 function* saveSaga(action: CreateAction) {
   try {
-    const project: Project = yield call(addProject, action.payload, user)
+    const user: User = yield select(auth.selectors.getUser)
+    const project: Project = yield call(addProject, action.payload, {
+      ...user.profile,
+      id: user.auth.uid
+    })
+
     yield put(save.success(project))
   } catch {
     yield put(save.error(new Error('@project/save:error')))

@@ -6,21 +6,21 @@ export interface Project {
   content: string
   authorFirstName: string
   authorLastName: string
+  authorId: string
   createdAt: Date
 }
 
 export interface Author {
   firstname: string
   lastname: string
+  id: string
 }
 
-export async function fetchProjects(author: Author) {
+export async function fetchProjects() {
   const snapshot = await firebase
     .firestore()
     .collection('projects')
     .orderBy('createdAt', 'desc')
-    .where('authorFirstName', '==', author.firstname)
-    .where('authorLastName', '==', author.lastname)
     .get()
   const projects = snapshot.docs.map(doc => {
     const project = doc.data()
@@ -43,6 +43,7 @@ export async function addProject(
     content: project.content || '',
     authorFirstName: user.firstname,
     authorLastName: user.lastname,
+    authorId: user.id,
     createdAt: firebase.firestore.Timestamp.now()
   }
   const docRef = await firebase
