@@ -2,6 +2,7 @@
 
 # credentials
 /src/config/firebase-client.json
+.firebaserc
 
 # dependencies
 /node_modules
