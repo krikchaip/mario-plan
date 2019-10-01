@@ -7,7 +7,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 
 // Your web app's Firebase configuration
-import firebaseConfig from 'config/firebase-client.json'
+import firebaseConfig from '.credentials/firebase-client.json'
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
