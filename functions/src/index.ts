@@ -3,9 +3,24 @@ import * as functions from 'firebase-functions'
 
 firebase.initializeApp()
 
-// Start writing Firebase Functions
-// https://firebase.google.com/docs/functions/typescript
+export const onProjectCreate = functions.firestore
+  .document('projects/{id}')
+  .onCreate(async snapshot => {
+    const project = snapshot.data()
 
-export const api = functions.https.onRequest((request, response) => {
-  response.send('Hello World!')
-})
+    if (!project) return
+
+    await firebase
+      .firestore()
+      .collection('notifications')
+      .add({
+        detail: 'Added a new project',
+        time: project.createdAt,
+        who: {
+          id: project.authorId,
+          name: `${project.authorFirstName} ${project.authorLastName}`
+        }
+      })
+
+    console.log(`"${project.title}" was created by ${project.authorId}`)
+  })

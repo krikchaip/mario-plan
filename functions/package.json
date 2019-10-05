@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "firebase:serve": "firebase serve --only functions",
+    "firebase:serve": "firebase serve --only functions,firestore",
     "firebase:shell": "firebase functions:shell",
     "serve": "run-p watch firebase:serve",
     "shell": "run-p watch firebase:shell",
